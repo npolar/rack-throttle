@@ -9,14 +9,14 @@ Gem::Specification.new do |gem|
   gem.version            = Rack::Throttle::VERSION.to_s
   gem.date               = Date.today.to_s
 
-  gem.name               = 'npolar-rack-throttle'
-  gem.homepage           = 'http://github.com/npolar/rack-throttle'
+  gem.name               = 'docunext-rack-throttle'
+  gem.homepage           = 'http://github.com/docunext/rack-throttle'
   gem.license            = 'Public Domain' if gem.respond_to?(:license=)
   gem.summary            = 'HTTP request rate limiter for Rack applications.'
   gem.description        = 'Rack middleware for rate-limiting incoming HTTP requests.'
   gem.rubyforge_project  = 'datagraph'
 
-  gem.authors            = ['Arto Bendiken', 'Brendon Murphy']
+  gem.authors            = ['Arto Bendiken', 'Brendon Murphy', 'Albert Lash']
   gem.email              = 'arto.bendiken@gmail.com'
 
   gem.platform           = Gem::Platform::RUBY
