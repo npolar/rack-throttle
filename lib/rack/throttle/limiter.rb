@@ -25,6 +25,7 @@ module Rack; module Throttle
     # @option options [String]  :key_prefix (nil)
     # @option options [Integer] :code       (429)
     # @option options [String]  :message    ("Rate Limit Exceeded")
+    # @option options [Array]   :bypass     ([''])
     def initialize(app, options = {})
       @app, @options = app, options
     end
@@ -35,7 +36,7 @@ module Rack; module Throttle
     # @see    http://rack.rubyforge.org/doc/SPEC.html
     def call(env)
       request = Rack::Request.new(env)
-      allowed?(request) ? app.call(env) : rate_limit_exceeded(request)
+      (bypass?(request) || allowed?(request)) ? app.call(env) : rate_limit_exceeded(request)
     end
 
     ##
@@ -82,6 +83,24 @@ module Rack; module Throttle
     # @abstract
     def blacklisted?(request)
       false
+    end
+
+    ##
+    # Returns `true` if this request should be bypassed based upon the
+    # request method
+    #
+    # @param  [Rack::Request] request
+    # @return [Boolean]
+    def bypass?(request)
+      bypass_methods.include?(request.request_method)
+    end
+
+    ##
+    # Request method types to bypass 
+    # 
+    # @return [Array]
+    def bypass_methods
+      @bypass ||= @options[:bypass] || ['']
     end
 
     protected
